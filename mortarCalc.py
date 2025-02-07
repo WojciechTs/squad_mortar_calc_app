@@ -3,6 +3,8 @@ from tkinter import Button, PhotoImage
 import math
 from tkinter.ttk import Label
 from PIL import ImageGrab, Image
+import os.path
+
 
 metry = 100
 pixele = 519
@@ -146,6 +148,12 @@ def makeScreenShot():
     screenshot.save("screenshot.png")
     screenshot.close()
 
+def makeFile():
+    if not os.path.isfile("screenshot.png"):
+        new = Image.new(mode="RGBA", size=(1920, 1080))
+        new.save("screenshot.png")
+        new.close()
+
 def setFocus():
     root.focus_set()
 
@@ -156,6 +164,7 @@ def on_press(key):
 def endPro():
     root.destroy()
 
+makeFile()
 root = tk.Tk()
 root.geometry("400x200")
 root.title("MAIN")
