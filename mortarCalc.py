@@ -82,7 +82,20 @@ def mortar_milirad(dist):
     else:
         return 0
 
+def hellcanon_degree(dist):
+    tab1 = [ 90,89.2,88.5,87.7,86.9,86.1,85.3,84.5,83.7,82.9,82.1,81.3,80.5,79.7,78.9,78,77.1,76.2,75.4,74.5,73.6,72.6,71.7,70.7,69.7,68.6,67.5,66.4,65.3,64.1,62.7,61.4,59.8,58.2,56.3,54.1,51.2,45.4]
+    tab2= [0.02,0.032,0.028,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.032,0.036,0.036,0.036,0.032,0.036,0.036,0.04,0.036,0.04,0.04,0.044,0.044,0.044,0.044,0.048,0.056,0.052,0.064,0.064,0.076,0.088,0.116,0.232]
 
+    if dist>=0 and dist<=925:
+        if dist%25==0:
+            return tab1[int(dist/25)],90-tab1[int(dist/25)]
+        else:
+            prze = math.floor(dist/25)
+            dist = dist - (prze*25)
+            x=tab1[prze]-(dist*round(tab2[prze],2))
+            return x,90-x
+    else:
+        return 0,0
 
 def windo():
     win = tk.Toplevel(root)
@@ -105,7 +118,9 @@ def windo():
             dist_m = (pixel_dist_c / pixele) * metry
             degree = azi(pixel_dist_a,pixel_dist_c, x, x1, y, y1)
             a = '\u00b0'
-            text2.config(text=f"Dist:   {round(dist_m,2)}m\nAzy:    {round(degree,2)}{a}\nMortar: {round(mortar_milirad(round(dist_m,2)),2)}{a}",font=('Helvetica 15 bold italic'))
+            hell,canon= hellcanon_degree(dist_m)
+            tekst = f"Dist:   {round(dist_m,2)}m\nAzy:    {round(degree,2)}{a}\nMortar: {round(mortar_milirad(round(dist_m,2)),2)}{a}\nHell Canon: {round(hell,2)}{a}/{round(canon,2)}{a}"
+            text2.config(text=tekst,font=('Helvetica 15 bold italic'))
             endCal()
         else:
             canvas.old_coords = x, y
