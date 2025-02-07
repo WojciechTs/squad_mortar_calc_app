@@ -1,3 +1,5 @@
+Okno gry nie może być Fullscreen!
+
 v1
 Funkcje:
 Dystans
